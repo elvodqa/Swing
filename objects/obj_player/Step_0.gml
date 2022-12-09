@@ -1,6 +1,3 @@
-
-
-
 mouseX = window_mouse_get_x();
 mouseY = window_mouse_get_y();
 
@@ -37,10 +34,14 @@ if (mouseX > obj_camera.view_w)
 
 
 
-if (mouse_check_button_pressed(mb_left)) 
+if (mouse_check_button_pressed(mb_left) and !attack and !dash) 
 {
 	attack = true;
 	actionDur = 30;
+	oldX = mouseX;
+	oldY = mouseY;
+	TweenEasyMove(swordX, swordY, swordX+cos(180-curWeaponAngle+90)*20, swordY+sin(180-curWeaponAngle+90)*20, 0, 30, EaseInOutQuad);
+	
 }
 
 if (attack) 
@@ -54,17 +55,41 @@ if (attack)
 	}
 }
 
-if (keyboard_check_pressed(vk_space)) 
+if (keyboard_check_pressed(vk_space) and !dash and !attack) 
 {
 	dash = true;
-	actionDur = 100;
+	actionDur = 20;
+	hor = key_right - key_left;
+	ver = key_down - key_up;
+	
+	if (hor != 0 and ver != 0) 
+	{
+		TweenEasyMove(x, y, x+hor*100*0.707107, y+ver*70, 0, 20, EaseInOutQuad);
+	}
+	else
+	{
+		TweenEasyMove(x, y, x+hor*100, y+ver*70, 0, 20, EaseInOutQuad);
+	}
+	
+	if (ver == 0) 
+	{
+		TweenEasyRotate(image_angle, image_angle+360*-hor, 0, 20, EaseInOutQuad);
+	}
+	else if (hor == 0) 
+	{
+		TweenEasyRotate(image_angle, image_angle+360*-ver, 0, 20, EaseInOutQuad);
+	}
+	else {
+		TweenEasyRotate(image_angle, image_angle+360, 0, 20, EaseInOutQuad);
+	}
+	
 }
 
 if (dash) 
 {
 	actionDur ++;
 	
-	if (actionDur >= 0) 
+	if (actionDur >= actionDurMax) 
 	{
 		actionDur = 0;
 		dash = false;
@@ -74,8 +99,12 @@ if (dash)
 
 if key_right or key_left or key_up or key_down 
 {
-	image_angle = sin(time/10)*4;
-	time+=1
+	if !dash 
+	{
+		image_angle = sin(time/10)*4;
+		time+=1
+	}
+	
 } else {
 	image_angle = 0;
 }
@@ -86,7 +115,11 @@ if (hspd != 0) and (vspd !=0) {
 
 curWeaponAngle = -radtodeg(arctan2(mouseY-300,mouseX-600))-90;
 
-
+if (!attack) 
+{
+	swordX = clamp(mouse_x, x-18, x+18);
+	swordY = clamp(mouse_y, y-18, y+18);
+}
 
 
 

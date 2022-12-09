@@ -8,7 +8,7 @@ draw_text(obj_camera.view_w*2, obj_camera.view_h*2 - 45, "Attack: " + string(obj
 draw_text(obj_camera.view_w*2, obj_camera.view_h*2 - 60, "Dash: " + string(obj_player.dash));
 draw_text(obj_camera.view_w*2, obj_camera.view_h*2 - 75, "Mouse: " + string(obj_player.mouseX) + " " + string(obj_player.mouseY));
 draw_text(obj_camera.view_w*2, obj_camera.view_h*2 - 90, "WeaAng: " + string(obj_player.curWeaponAngle));
-
+draw_text(obj_camera.view_w*2, obj_camera.view_h*2 - 105, "SwordPos: " + string(obj_player.swordX) + " " + string(obj_player.swordY));
 
 draw_set_color(c_white);	
 draw_set_font(font_debug);

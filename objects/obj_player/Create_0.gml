@@ -20,3 +20,6 @@ curWeaponAngle = 0;
 
 mouseX = window_mouse_get_x();
 mouseY = window_mouse_get_y();
+
+swordX = x;
+swordY = y;
