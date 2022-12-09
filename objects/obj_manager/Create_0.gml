@@ -1,0 +1,1 @@
+window_set_caption("Swing 0.0.1")
